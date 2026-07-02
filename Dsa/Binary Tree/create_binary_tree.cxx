@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 // Binary Tree
 // node class
@@ -38,6 +39,72 @@ void preorder(node *root)
     preorder(root->left);
     preorder(root->right);
 }
+// inorder traversal
+void inorder(node *root)
+{
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+    cout << root->val << " ";
+    inorder(root->right);
+}
+// post order Traversal
+void postorder(node *root)
+{
+    if (root == NULL)
+        return;
+
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->val << " ";
+}
+// level order Traversal
+void levelorder(node *root)
+{
+    queue<node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        node *curr = q.front();
+        q.pop();
+        cout << curr->val << " ";
+        if (curr->left != NULL)
+            q.push(curr->left);
+        if (curr->right != NULL)
+            q.push(curr->right);
+    }
+}
+// level order Traversal
+void levelorder2(node *root)
+{
+    queue<node *> q;
+    q.push(root);
+    q.push(NULL);
+    while (!q.empty())
+    {
+        node *curr = q.front();
+        q.pop();
+        if (curr == NULL)
+        {
+            if (!q.empty())
+            {
+                cout << endl;
+                q.push(NULL);
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        cout << curr->val << " ";
+        if (curr->left != NULL)
+            q.push(curr->left);
+        if (curr->right != NULL)
+            q.push(curr->right);
+    }
+}
 // main function
 int main()
 {
@@ -47,9 +114,22 @@ int main()
     cout << "Root Value: " << root->val << endl;
     cout << "Root Left: " << root->left->val << endl;
     cout << "Root Right: " << root->right->val << endl;
-    cout << endl
-         << "Binary Tree :";
+
+    cout
+        << "\n Preorder Traversal: ";
     preorder(root);
+    cout
+        << "\n Inorder Traversal: ";
+    inorder(root);
+    cout
+        << "\n Post order Traversal: ";
+    postorder(root);
+    cout
+        << "\n Level order Traversal: ";
+    levelorder(root);
+    cout
+        << "\n Level order Traversal 2: \n";
+    levelorder2(root);
 
     return 0;
 }
